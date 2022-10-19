@@ -40,7 +40,7 @@ const salt = await bcrypt.genSalt(10);
   next();
 });
 
-UserSchema.methods.matchPasswords = async function(password){
+UserSchema.methods.matchPassword = async function(password){
   return await bcrypt.compare(password, this.password);
 };
 UserSchema.methods.getSignedToken = function(){
