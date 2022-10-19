@@ -27,7 +27,7 @@ password: {
     minlength: 6,
     select: false,
 },
-resetPaswordToken: String,
+resetPasswordToken: String,
 resetPasswordExpire: Date,
 });
 

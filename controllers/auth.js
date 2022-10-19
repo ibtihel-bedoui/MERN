@@ -78,9 +78,9 @@ exports.forgotpassword = async (req, res, next) => {
 
             res.status(200).json({success:true, data: "Email Sent"});
 
-        } catch (err) {
+        } catch (error) {
 
-            user.resetPaswordToken = undefined; 
+            user.resetPasswordToken = undefined; 
             user.resetPasswordExpire = undefined; 
 
             await user.save();
@@ -102,7 +102,7 @@ exports.resetpassword = async (req, res, next) => {
 
     try {
         const user = await User.findOne({
-            resetPaswordToken,
+            resetPasswordToken,
             resetPasswordExpire: { $gt: Date.now() }, 
         });
 
@@ -120,7 +120,7 @@ exports.resetpassword = async (req, res, next) => {
         res.status(201).json({
             success: true, 
             data: "Password Reset Success",
-            token: user.getSignedToken(),
+        
         
         });
     } catch (err) {
