@@ -7,7 +7,8 @@ const PrivateScreen = () => {
   const history = useHistory();
   const [error, setError] = useState("");
   const [privateData, setPrivateData] = useState("");
-
+  const role = `${localStorage.getItem("Role")}`;
+  console.log("role", role);
   useEffect(() => {
     const fetchPrivateDate = async () => {
       const config = {
@@ -22,6 +23,7 @@ const PrivateScreen = () => {
         setPrivateData(data.data);
       } catch (error) {
         localStorage.removeItem("authToken");
+        localStorage.removeItem("Role");
         setError("You are not authorized please login");
       }
     };
@@ -30,16 +32,30 @@ const PrivateScreen = () => {
   }, []);
   const logoutHandler = () => {
     localStorage.removeItem("authToken");
+    localStorage.removeItem("Role");
     history.push("/login");
   };
-  return error ? (
-    <span className="error-message">{error}</span>
-  ) : (
-    <>
-      <div style={{ background: "green", color: "white" }}>{privateData}</div>
-      <button onClick={logoutHandler}>Logout</button>
-    </>
-  );
+  if (role == "Admin") {
+    return (
+      <>
+        <div style={{ background: "green", color: "white" }}>
+          {privateData} {role}
+        </div>
+        <button onClick={logoutHandler}>Logout</button>
+      </>
+    );
+  } else if (role == "User") {
+    return (
+      <>
+        <div style={{ background: "red", color: "white" }}>
+          {privateData} {role}
+        </div>
+        <button onClick={logoutHandler}>Logout</button>
+      </>
+    );
+  } else {
+    return error(<span className="error-message">{error}</span>);
+  }
 };
 
 export default PrivateScreen;

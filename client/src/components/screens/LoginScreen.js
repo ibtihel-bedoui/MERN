@@ -31,6 +31,7 @@ const LoginScreen = ({ history }) => {
       );
 
       localStorage.setItem("authToken", data.token);
+      localStorage.setItem("Role", data.user.Role);
 
       history.push("/");
     } catch (error) {
